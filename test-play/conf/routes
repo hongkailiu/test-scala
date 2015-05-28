@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                           controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /webjars/*file              controllers.WebJarAssets.at(file)
+
+# person
+GET     /persons/all                controllers.Persons.list()
+GET     /persons/:id                controllers.Persons.show(id: Long)
+
+#ws
+GET     /hello                      controllers.Application.wsHello
+
+#twitter
+GET     /twitter                    controllers.Twitter.index
+GET     /twitter/show/:hashTag      controllers.Twitter.show(hashTag: String)
+GET     /twitter/api/ht             controllers.Twitter.twitterWebSocket

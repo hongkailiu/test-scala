@@ -1,0 +1,116 @@
+@(message: String)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>twitter</title>
+    <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+    <style>
+        body {
+        margin-top: 50px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+$(document).ready(function(){
+    //alert("ready" + $("#hashTag").text());
+    var hashTag = $.trim($("#hashTag").text());;
+    connectToWS(hashTag);
+});
+    var myWebSocket;
+
+
+    function connectToWS(hashTag) {
+        //if (hashTag=="dwts" || hashTag=="abc" )  {
+        var endpoint = "ws://localhost:9000/twitter/api/ht?name=" + hashTag;
+       // } else {
+        //    return;
+       // }
+
+        //var endpoint = "ws://localhost:9000/twitter/api/"; //document.getElementById("endpoint").value;
+
+        if (myWebSocket !== undefined) {
+            myWebSocket.close()
+        }
+
+        myWebSocket = new WebSocket(endpoint);
+
+        myWebSocket.onmessage = function(event) {
+            var leng;
+            if (event.data.size === undefined) {
+                leng = event.data.length
+            } else {
+                leng = event.data.size
+            }
+            //alert("onmessage. size: " + leng + ", content: " + event.data);
+            jQuery('<div/>', {
+   // id: 'foo',
+   // href: 'http://google.com',
+   // title: 'Become a Googler',
+   // rel: 'external',
+    text: event.data
+}).appendTo('#twitt');
+            //$( "#twitt" ).append( $( "h2" ) );
+            console.log("onmessage. size: " + leng + ", content: " + event.data);
+        }
+
+        myWebSocket.onopen = function(evt) {
+            console.log("onopen.");
+        };
+
+        myWebSocket.onclose = function(evt) {
+            console.log("onclose.");
+        };
+
+        myWebSocket.onerror = function(evt) {
+            console.log("Error!");
+        };
+    }
+
+    function sendMsg() {
+        var message = document.getElementById("myMessage").value;
+        myWebSocket.send(message);
+    }
+
+    function closeConn() {
+        myWebSocket.close();
+    }
+
+    </script>
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a id="titleLink" class="brand" href="/">twitter</a>
+        </div>
+    </div>
+</div>
+<div id="hashTag" class="container">
+    @message
+</div>
+<!--
+<div>
+
+    <form>
+        connection to: <input type="text" id="endpoint" name="endpoint" value="ws://echo.websocket.org"  style="width: 200px" ><br>
+    </form>
+
+    <input type="button" onclick="connectToWS()" value="connect to WebSocket endpoint" /><br><br>
+
+    <form>
+        message: <input type="text" id="myMessage" name="myMessage" value="hi there!"><br>
+    </form>
+
+    <input type="button" onclick="sendMsg()" value="Send message" />
+
+    <input type="button" onclick="closeConn()" value="Close connection" />
+</div> -->
+
+<div id="twitt" class="container">
+
+</div>
+</body>
+</html>
