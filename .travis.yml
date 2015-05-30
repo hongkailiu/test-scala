@@ -4,5 +4,5 @@ scala:
 jdk:
   - oraclejdk8
 
-script: sh -c 'cd test-app/ && activator test && cd ../test-play/ && activator test'
+script: sh -c 'cd test-app/ && sbt test && cd ../test-play/ && sbt test'
 
