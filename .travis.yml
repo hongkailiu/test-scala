@@ -3,3 +3,6 @@ scala:
   - 2.11.6
 jdk:
   - oraclejdk8
+
+script: sh -c 'cd test-app/ && activator test && cd ../test-play/ && activator test'
+
