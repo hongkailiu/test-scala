@@ -6,3 +6,4 @@
 /target/
 #hk
 /.idea/
+/scala-logging.log

@@ -15,8 +15,9 @@ object Dependencies {
   val akkaCluster = "com.typesafe.akka" %% "akka-cluster" % akkaVersion
   val akkaTestkit = "com.typesafe.akka" %% "akka-testkit" % akkaVersion
   val scalaTest = "org.scalatest" % "scalatest_2.11" % "2.2.4"
+  val guice = "net.codingwell" %% "scala-guice" % "4.0.0-beta5"
 
   // Projects
   val testAppDeps =
-    Seq(nscalaTime, json, scalaLogging, logback, akka, akkaCluster, scalaTest % Test, akkaTestkit % Test)
+    Seq(nscalaTime, json, scalaLogging, logback, akka, akkaCluster, guice, scalaTest % Test, akkaTestkit % Test)
 }
