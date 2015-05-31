@@ -12,10 +12,11 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap" % "3.3.4" exclude("org.webjars", "jquery"),
   "org.webjars" % "requirejs" % "2.1.11-1",
   "org.twitter4j" % "twitter4j-core" % "4.0.3",
-  "org.scalatest" %% "scalatest" % "2.2.4" % Test,
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test"
+  //"org.scalatest" %% "scalatest" % "2.2.4" % Test,
   // not working with the following
   //  "org.scalatestplus" %% "play" % "1.1.1" % "test",
-  "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
+  //"org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
 )
 
 lazy val root = (project in file(".")).addPlugins(PlayScala)

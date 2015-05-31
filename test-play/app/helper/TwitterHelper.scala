@@ -1,8 +1,6 @@
 package helper
 
-import java.util.concurrent.{ExecutorService, Executors}
-
-import Messages._
+import Messages.{MyMessage, MyMessageResponse, MyMessageTwittRequest}
 import akka.actor._
 import play.Logger
 
@@ -23,7 +21,10 @@ class MyActor extends Actor {
       Logger.info(s"MyActor: MyMessageTwittRequest $out $name $count.")
       TwitterHelper.request(out, name, count, resultHandler)
     }
-    case _ => Logger.info("MyActor receive: unknown message")
+    case a: Any => {
+      Logger.info("MyActor receive: unknown message")
+      sender ! MyMessageResponse(MyMessage.UNKNOWN_MSG)
+    }
   }
 
   override def preStart() = {
