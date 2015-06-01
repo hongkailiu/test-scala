@@ -1,8 +1,8 @@
 package controllers
 
-import Messages.MyMessageTwittRequest
+import Messages.MyMessageRequestTwitt
 import akka.actor.{Actor, ActorRef, Props}
-import helper.{MyActor, ResultHandler}
+import helper.{TwitterHelperImpl, MyActor, ResultHandler}
 import models.Twitt
 import play.Logger
 import play.api.Play.current
@@ -62,9 +62,9 @@ object MyWebSocketActor {
 class MyWebSocketActor(out: ActorRef, name: String) extends Actor {
   //import MyWebSocketActor._
 
-  val actorRef: ActorRef = context.actorOf(Props[MyActor], "myActor")
+  val actorRef: ActorRef = context.actorOf(Props(new MyActor(new TwitterHelperImpl())), "myActor")
   //play.libs.Akka.system.scheduler.schedule(new FiniteDuration(0, SECONDS), new FiniteDuration(10, SECONDS), actorRef, MyMessageTwittRequest(out, name, 3, new MyHandler(out)))
-  play.libs.Akka.system.scheduler.schedule(0 seconds, 10 seconds, actorRef, MyMessageTwittRequest(out, name, 3, new MyHandler(out)))
+  play.libs.Akka.system.scheduler.schedule(0 seconds, 10 seconds, actorRef, MyMessageRequestTwitt(out, name, 3, new MyHandler(out)))
 
   override def preStart() = {
     Logger.info("MyWebSocketActor: Connected!")

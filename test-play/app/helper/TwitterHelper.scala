@@ -1,28 +1,42 @@
 package helper
 
-import Messages.{MyMessage, MyMessageResponse, MyMessageTwittRequest}
+import Messages.{MyMessage, MyMessageResponse, MyMessageRequestTwitt}
 import akka.actor._
 import play.Logger
 
 /**
  * Created by ehongka on 5/25/15.
  */
-object TwitterHelper {
-  def request(out: ActorRef, name: String, count: Int, resultHandler: ResultHandler) = {
+trait TwitterHelper {
+  def request(out: ActorRef, name: String, count: Int, resultHandler: ResultHandler)
+}
+
+class TwitterHelperImpl extends TwitterHelper {
+  override def request(out: ActorRef, name: String, count: Int, resultHandler: ResultHandler): Unit = {
+    TwitterHelper.request(out,name,count,resultHandler)
+  }
+}
+
+object TwitterHelper extends TwitterHelper {
+  override def request(out: ActorRef, name: String, count: Int, resultHandler: ResultHandler) = {
     val twitterService: TwitterService = new TwitterService(name, count, resultHandler)
     twitterService.query()
   }
 }
 
-class MyActor extends Actor {
+class MyActor(twitterHelper:TwitterHelper) extends Actor {
 
   override def receive = {
-    case MyMessageTwittRequest(out: ActorRef, name: String, count: Int, resultHandler: ResultHandler) => {
+    case MyMessageRequestTwitt(out, name, count, resultHandler) => {
       Logger.info(s"MyActor: MyMessageTwittRequest $out $name $count.")
-      TwitterHelper.request(out, name, count, resultHandler)
+      twitterHelper.request(out, name, count, resultHandler)
+      sender ! MyMessageResponse(MyMessage.TWITT_DONE_MSG)
     }
-    case a: Any => {
-      Logger.info("MyActor receive: unknown message")
+    case MyMessageResponse(message) => {
+      Logger.info(s"MyActor receive: MyMessageResponse: $message")
+    }
+    case _ => {
+      Logger.info(s"MyActor receive: unknown message")
       sender ! MyMessageResponse(MyMessage.UNKNOWN_MSG)
     }
   }
