@@ -26,5 +26,14 @@ class ApplicationSpec extends Specification {
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Hello Play Framework")
     }
+
+    "send all persons" in new WithApplication{
+      val home = route(FakeRequest(GET, "/persons/all")).get
+
+      status(home) must equalTo(OK)
+      contentType(home) must beSome.which(_ == "application/json")
+      contentAsString(home) must contain ("hk")
+    }
+
   }
 }
