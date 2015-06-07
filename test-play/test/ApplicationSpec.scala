@@ -35,5 +35,23 @@ class ApplicationSpec extends Specification {
       contentAsString(home) must contain ("hk")
     }
 
+    "send some person" in new WithApplication{
+      val id:Long=23
+      val home = route(FakeRequest(GET, "/persons/" + id)).get
+
+      status(home) must equalTo(OK)
+      contentType(home) must beSome.which(_ == "text/html")
+      contentAsString(home) must contain (id.toString)
+    }
+
+    "respond to twitter page" in new WithApplication{
+      val hashTag:String="23"
+      val home = route(FakeRequest(GET, "/twitter/show/" + hashTag)).get
+
+      status(home) must equalTo(OK)
+      contentType(home) must beSome.which(_ == "text/html")
+      contentAsString(home) must contain (hashTag)
+    }
+
   }
 }

@@ -15,7 +15,7 @@ import scala.concurrent.duration._
 class MyActorTest extends Specification with NoTimeConversions with IsolatedMockFactory {
   sequential
   // forces all tests to be run sequentially
-  val system = ActorSystem("HelloAkkaSpec")
+  val system = ActorSystem("MyActorTest")
   val mockTwitterHelper: TwitterHelper = mock[TwitterHelperImpl]
   //does not work yet with spec2 version
   //mockTwitterHelper.request(Matchers.any[ActorRef],Matchers.anyString(),Matchers.anyInt(),Matchers.any[ResultHandler]) returns Unit

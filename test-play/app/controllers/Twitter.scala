@@ -88,7 +88,7 @@ class MyWebSocketActor(out: ActorRef, name: String) extends Actor {
 }
 
 class MyHandler(out: ActorRef) extends ResultHandler {
-  var idSet: Set[String] = Set()
+  private var idSet: Set[String] = Set()
 
   override def handle(queryResult: QueryResult): Unit = {
     val statusList: java.util.List[Status] = queryResult.getTweets
@@ -98,7 +98,7 @@ class MyHandler(out: ActorRef) extends ResultHandler {
     }
   }
 
-  def handleStatus(status: Status): Unit = {
+  private def handleStatus(status: Status): Unit = {
     /*println("=====a=======")
     println(status.getCreatedAt)
     println(status.getId)
