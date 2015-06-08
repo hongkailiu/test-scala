@@ -1,5 +1,6 @@
 package tk.hongkailiu.test.guice
 
+import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 /**
@@ -7,8 +8,12 @@ import org.scalatest.FunSuite
  */
 class PersonTest extends FunSuite {
 
-  test("trivial"){
-    assert(1===1)
+  test("trivial") {
+    assert(1 === 1)
   }
 
+  test("constructor") {
+    val person = new Person(3, "hk", new DateTime(1980, 4, 10, 3, 30))
+    assert(person !== null)
+  }
 }
