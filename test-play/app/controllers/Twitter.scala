@@ -1,8 +1,8 @@
 package controllers
 
 import Messages.MyMessageRequestTwitt
-import akka.actor.{Actor, ActorRef, Props}
-import helper.{TwitterHelperImpl, MyActor, ResultHandler}
+import akka.actor.{ActorSystem, Actor, ActorRef, Props}
+import helper._
 import models.Twitt
 import play.Logger
 import play.api.Play.current
@@ -14,13 +14,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-object Twitter extends Controller {
-  //val system = ActorSystem.create("testPlay")
+object Twitter extends Controller with Twitter
 
-  //http://localhost:9000/persons/all
-  def index = Action {
-    Ok(views.html.twitter("twitter is here"))
-  }
+trait Twitter extends Controller {
 
   // http://localhost:9000/twitter/show/dwts
   def show(hashTag: String) = Action {
@@ -30,7 +26,6 @@ object Twitter extends Controller {
   def twitterWebSocket = WebSocket.acceptWithActor[String, String] { request => out => {
     // http://localhost:9000/twitter/api/ht?name=dwts
     Logger.info("request.uri: " + request.uri)
-    //var name = "dummy"
     val o: Option[String] = request.getQueryString("name")
 
     if (o != None && o.isDefined) {
@@ -38,40 +33,26 @@ object Twitter extends Controller {
       MyWebSocketActor.props(out, name)
     } else {
       Logger.info("abnormal uri: " + request.uri)
-      //Props.empty
       throw new IllegalArgumentException("abnormal uri: " + request.uri)
     }
-    //val name:String = request.getQueryString("name").getOrElse(0)
-    //val uri:String = request.uri
-    //val name:String = uri.substring(uri.lastIndexOf('/')+1)
-    //Logger.info("name: " + name)
-    //val name = request.
-    //MyWebSocketActor.props(out, TwitterHelper.dwts)
-    //MyWebSocketActor.props(out, "dwts")
   }
-
-
   }
 
 }
 
 object MyWebSocketActor {
-  def props(out: ActorRef, name: String) = Props(new MyWebSocketActor(out, name))
+  val systemProvider = new SystemProviderImp
+  def props(out: ActorRef, name: String) = Props(new MyWebSocketActor(out, name, systemProvider))
 }
 
-class MyWebSocketActor(out: ActorRef, name: String) extends Actor {
-  //import MyWebSocketActor._
-
+class MyWebSocketActor(out: ActorRef, name: String, systemProvider: SystemProvider) extends Actor {
   val actorRef: ActorRef = context.actorOf(Props(new MyActor(new TwitterHelperImpl())), "myActor")
-  //play.libs.Akka.system.scheduler.schedule(new FiniteDuration(0, SECONDS), new FiniteDuration(10, SECONDS), actorRef, MyMessageTwittRequest(out, name, 3, new MyHandler(out)))
-  play.libs.Akka.system.scheduler.schedule(0 seconds, 10 seconds, actorRef, MyMessageRequestTwitt(out, name, 3, new MyHandler(out)))
+  systemProvider.getAkkaSystem.scheduler.schedule(0 seconds, 10 seconds, actorRef, MyMessageRequestTwitt(out, name, 3, new MyHandler(out)))
 
   override def preStart() = {
     Logger.info("MyWebSocketActor: Connected!")
-    //TwitterHelper.myActorRef ! MyMessagePlus(out, name)
   }
 
-  //private[this] var (channel) = Concurrent.broadcast[String]
   override def receive = {
     case msg: String => {
       Logger.info("MyWebSocketActor receive: " + msg)
@@ -82,7 +63,6 @@ class MyWebSocketActor(out: ActorRef, name: String) extends Actor {
 
   override def postStop() = {
     Logger.info("MyWebSocketActor: Disconnected!")
-    //TwitterHelper.myActorRef ! MyMessageMinus(out, name)
   }
 
 }
@@ -99,11 +79,6 @@ class MyHandler(out: ActorRef) extends ResultHandler {
   }
 
   private def handleStatus(status: Status): Unit = {
-    /*println("=====a=======")
-    println(status.getCreatedAt)
-    println(status.getId)
-    println(status.getText)
-    println("=====b=======")*/
     val twitt = new Twitt(status.getCreatedAt.toString, java.lang.Long.toString(status.getId), status.getText)
 
     if (!idSet.contains(twitt.id)) {

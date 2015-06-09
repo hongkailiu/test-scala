@@ -22,5 +22,7 @@ class MyApplicationSpec extends PlaySpecification {
       //val bodyText: String = "Hello"
       bodyText.contains("Hello Play Framework") must beTrue
     }
+
+    // TODO test for wsHello = WebSocket
   }
 }

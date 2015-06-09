@@ -6,7 +6,9 @@ import play.api.mvc.{Action, Controller}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-object Persons extends Controller {
+object Persons extends Controller with Persons
+
+trait Persons extends Controller {
   //http://localhost:9000/persons/all
   def list = Action {
     //Ok(views.html.index("Hello Play Framework: list"))

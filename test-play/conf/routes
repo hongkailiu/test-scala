@@ -16,6 +16,5 @@ GET     /persons/:id                controllers.Persons.show(id: Long)
 GET     /hello                      controllers.Application.wsHello
 
 #twitter
-GET     /twitter                    controllers.Twitter.index
 GET     /twitter/show/:hashTag      controllers.Twitter.show(hashTag: String)
 GET     /twitter/api/ht             controllers.Twitter.twitterWebSocket
