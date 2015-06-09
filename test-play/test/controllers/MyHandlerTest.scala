@@ -14,7 +14,6 @@ import scala.concurrent.duration._
 class MyHandlerTest extends Specification with NoTimeConversions with IsolatedMockFactory  {
   sequential
 
-
   implicit val system = ActorSystem("MyHandlerTest")
   val testProbe: TestProbe = TestProbe()
   val mockQueryResult: QueryResult = mock[QueryResult]
