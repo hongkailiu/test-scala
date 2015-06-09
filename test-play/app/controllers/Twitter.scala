@@ -41,13 +41,15 @@ trait Twitter extends Controller {
 }
 
 object MyWebSocketActor {
-  val systemProvider = new SystemProviderImp
+  val systemProvider = new MyWebSocketActorSupporterImpl
   def props(out: ActorRef, name: String) = Props(new MyWebSocketActor(out, name, systemProvider))
 }
 
-class MyWebSocketActor(out: ActorRef, name: String, systemProvider: SystemProvider) extends Actor {
-  val actorRef: ActorRef = context.actorOf(Props(new MyActor(new TwitterHelperImpl())), "myActor")
-  systemProvider.getAkkaSystem.scheduler.schedule(0 seconds, 10 seconds, actorRef, MyMessageRequestTwitt(out, name, 3, new MyHandler(out)))
+class MyWebSocketActor(out: ActorRef, name: String, myWebSocketActorSupporter: MyWebSocketActorSupporter) extends Actor {
+  val actorRef: ActorRef = myWebSocketActorSupporter.getActorRef(context)
+  val myHandler: MyHandler = myWebSocketActorSupporter.getMyHandler(out)
+  val internal: Int = myWebSocketActorSupporter.getInterval
+  myWebSocketActorSupporter.getAkkaSystem.scheduler.schedule(0 seconds, internal seconds, actorRef, MyMessageRequestTwitt(out, name, 3, myHandler))
 
   override def preStart() = {
     Logger.info("MyWebSocketActor: Connected!")
