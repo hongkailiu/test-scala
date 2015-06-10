@@ -21,4 +21,4 @@ libraryDependencies ++= Seq(
   "org.scalamock" %% "scalamock-specs2-support" % "3.2" % "test"
 )
 
-lazy val root = (project in file(".")).addPlugins(PlayScala)
+//lazy val root = (project in file(".")).addPlugins(PlayScala)
