@@ -21,6 +21,8 @@ class MyWebSocketActorTest extends Specification with NoTimeConversions with Iso
   val name: String = "name"
   val mockMyWebSocketActorSupporter: MyWebSocketActorSupporter = mock[MyWebSocketActorSupporterImpl]
 
+  // nice way to get an instance of MyHandler
+  // not being used for macking its behaviors here although
   class MyTestHandler extends MyHandler(dummyTestProbe.ref)
   val mockMyHandler: MyHandler = mock[MyTestHandler]
 
@@ -30,7 +32,6 @@ class MyWebSocketActorTest extends Specification with NoTimeConversions with Iso
     (mockMyWebSocketActorSupporter.getActorRef _).expects(*).returning(testProbe.ref).once
     (mockMyWebSocketActorSupporter.getMyHandler _).expects(dummyTestProbe.ref).returning(mockMyHandler).once
     (mockMyWebSocketActorSupporter.getInterval _).expects().returning(1).once
-    //(mockMyHandler.handle _).expects(*).returning(Unit)
   }
 
   "MyWebSocketActor" should {
