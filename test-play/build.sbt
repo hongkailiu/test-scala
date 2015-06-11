@@ -2,8 +2,6 @@ name := """test-play"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
@@ -22,3 +20,17 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 //routesGenerator := InjectedRoutesGenerator
+
+lazy val root = (project in file(".")).enablePlugins(PlayScala).configs(FunTest).settings( inConfig(FunTest)(Defaults.testTasks) : _*)
+
+lazy val FunTest = config("fun") extend(Test)
+
+def funTestFilter(name: String): Boolean = ((name endsWith "IT") || (name endsWith "IntegrationTest") || (name endsWith "IntegrationSpec"))
+def unitTestFilter(name: String): Boolean = (((name endsWith "Test") || (name endsWith "Spec")) && !funTestFilter(name))
+
+
+testOptions in FunTest := Seq(Tests.Filter(funTestFilter))
+
+testOptions in Test := Seq(Tests.Filter(unitTestFilter))
+
+//run sbt test for Unit Tests and sbt fun:test for functional/integration tests
