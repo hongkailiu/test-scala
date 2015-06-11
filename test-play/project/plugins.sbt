@@ -14,3 +14,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-rjs" % "1.0.7")
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
+
+// only used to show dependency tree
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.5")

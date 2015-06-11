@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % "4.0.3",
   "com.github.nscala-time" %% "nscala-time" % "2.0.0",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test",
-  "org.scalamock" %% "scalamock-specs2-support" % "3.2" % "test"
+  "org.scalamock" %% "scalamock-specs2-support" % "3.2" % "test" excludeAll(ExclusionRule(organization = "org.specs2"))
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
@@ -34,3 +34,6 @@ testOptions in FunTest := Seq(Tests.Filter(funTestFilter))
 testOptions in Test := Seq(Tests.Filter(unitTestFilter))
 
 //run sbt test for Unit Tests and sbt fun:test for functional/integration tests
+
+// only used to show dependency tree
+net.virtualvoid.sbt.graph.Plugin.graphSettings
