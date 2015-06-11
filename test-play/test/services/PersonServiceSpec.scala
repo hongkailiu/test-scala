@@ -1,6 +1,6 @@
 package services
 
-import dao.PersonDAOImpl
+import daos.PersonDAOImpl
 import models.Person
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification

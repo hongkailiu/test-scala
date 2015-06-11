@@ -1,4 +1,4 @@
-package dao
+package daos
 
 import models.Person
 import org.slf4j.LoggerFactory
