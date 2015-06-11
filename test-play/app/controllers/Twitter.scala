@@ -1,8 +1,8 @@
 package controllers
 
-import Messages.MyMessageRequestTwitt
+import messages.MyMessageRequestTwitt
 import akka.actor.{Actor, ActorRef, Props}
-import helper._
+import helpers._
 import models.Twitt
 import play.Logger
 import play.api.Play.current

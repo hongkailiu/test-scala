@@ -1,4 +1,4 @@
-package helper
+package helpers
 
 import akka.actor.{ActorContext, Props, ActorRef, ActorSystem}
 import controllers.MyHandler

@@ -5,6 +5,7 @@ import akka.testkit.TestProbe
 import org.joda.time.DateTime
 import org.scalamock.specs2.IsolatedMockFactory
 import org.specs2.mutable.Specification
+import org.specs2.specification.AfterAll
 import scala.concurrent.duration._
 
 import twitter4j._
@@ -13,8 +14,13 @@ import twitter4j._
 /**
  * Created by hongkailiu on 2015-06-06.
  */
-class MyHandlerTest extends Specification with IsolatedMockFactory  {
+class MyHandlerTest extends Specification with IsolatedMockFactory with AfterAll {
   sequential
+
+  override def afterAll = {
+    println("afterAll")
+    system.shutdown()
+  }
 
   implicit val system = ActorSystem("MyHandlerTest")
   val testProbe: TestProbe = TestProbe()

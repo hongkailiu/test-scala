@@ -1,6 +1,6 @@
-package helper
+package helpers
 
-import Messages.{MyMessage, MyMessageResponse, MyMessageRequestTwitt}
+import messages.{MyMessage, MyMessageResponse, MyMessageRequestTwitt}
 import akka.actor._
 import play.Logger
 

@@ -1,6 +1,6 @@
-package Service
+package services
 
-import DAO.{PersonDAOImpl, PersonDAO}
+import dao.{PersonDAOImpl, PersonDAO}
 import models.Person
 
 /**

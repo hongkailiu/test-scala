@@ -1,4 +1,4 @@
-package helper
+package helpers
 
 import play.api.Logger
 import twitter4j.conf.ConfigurationBuilder

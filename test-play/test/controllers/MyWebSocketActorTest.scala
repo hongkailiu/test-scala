@@ -1,19 +1,25 @@
 package controllers
 
-import Messages.MyMessageRequestTwitt
+import messages.MyMessageRequestTwitt
 import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, TestProbe}
-import helper.{MyWebSocketActorSupporter, MyWebSocketActorSupporterImpl}
+import helpers.{MyWebSocketActorSupporter, MyWebSocketActorSupporterImpl}
 import org.scalamock.specs2.IsolatedMockFactory
 import org.specs2.mutable.Specification
+import org.specs2.specification.AfterAll
 
 import scala.concurrent.duration._
 
 /**
   * Created by hongkailiu on 2015-06-08.
   */
-class MyWebSocketActorTest extends Specification with IsolatedMockFactory {
+class MyWebSocketActorTest extends Specification with IsolatedMockFactory with AfterAll {
    sequential
+
+  override def afterAll = {
+    println("afterAll")
+    system.shutdown()
+  }
 
    implicit val system = ActorSystem("MyHandlerTest")
    val testProbe: TestProbe = TestProbe()

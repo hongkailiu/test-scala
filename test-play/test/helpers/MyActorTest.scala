@@ -1,18 +1,24 @@
-package helper
+package helpers
 
-import Messages.{MyMessage, MyMessageRequestTwitt, MyMessageResponse}
+import messages.{MyMessage, MyMessageRequestTwitt, MyMessageResponse}
 import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
 import org.scalamock.specs2.IsolatedMockFactory
 import org.specs2.mutable._
+import org.specs2.specification.AfterAll
 
 import scala.concurrent.duration._
 
 /**
  * Created by hongkailiu on 2015-05-30.
  */
-class MyActorTest extends TestKit(ActorSystem("HelloAkkaSpec")) with SpecificationLike with IsolatedMockFactory with ImplicitSender {
+class MyActorTest extends TestKit(ActorSystem("HelloAkkaSpec")) with SpecificationLike with IsolatedMockFactory with ImplicitSender with AfterAll {
   sequential
+
+  override def afterAll = {
+    println("afterAll")
+    system.shutdown()
+  }
 
   val mockTwitterHelper: TwitterHelper = mock[TwitterHelperImpl]
   val unitUnderTest = TestActorRef(Props(new MyActor(mockTwitterHelper)), "myActor")

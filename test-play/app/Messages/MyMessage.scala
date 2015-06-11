@@ -1,7 +1,7 @@
-package Messages
+package messages
 
 import akka.actor.ActorRef
-import helper.ResultHandler
+import helpers.ResultHandler
 import models.Twitt
 
 /**
