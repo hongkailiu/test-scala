@@ -1,7 +1,7 @@
 package controllers
 
 import Messages.MyMessageRequestTwitt
-import akka.actor.{ActorSystem, Actor, ActorRef, Props}
+import akka.actor.{Actor, ActorRef, Props}
 import helper._
 import models.Twitt
 import play.Logger

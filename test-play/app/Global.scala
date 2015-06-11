@@ -1,4 +1,3 @@
-import helper.TwitterHelper
 import play.api._
 import play.api.mvc.RequestHeader
 import play.api.mvc.Results._
@@ -21,22 +20,22 @@ object Global extends GlobalSettings {
    * @param ex the throwable
    * @return Unit
    */
-  override def onError(request: RequestHeader, ex: Throwable) = {
+/*  override def onError(request: RequestHeader, ex: Throwable) = {
     Future.successful(InternalServerError(
       views.html.errorPage(ex.toString)
     ))
-  }
+  }*/
 
   /**
    * If the framework doesn’t find an Action for a request, the onHandlerNotFound operation will be called
    * @param request the request
    * @return Unit
    */
-  override def onHandlerNotFound(request: RequestHeader) = {
+/*  override def onHandlerNotFound(request: RequestHeader) = {
     Future.successful(NotFound(
       views.html.notFoundPage(request.path)
     ))
-  }
+  }*/
 
   /**
    * The onBadRequest operation will be called if a route was found, but it was not possible to bind the request parameters
@@ -44,7 +43,7 @@ object Global extends GlobalSettings {
    * @param error the error
    * @return Unit
    */
-  override def onBadRequest(request: RequestHeader, error: String) = {
+/*  override def onBadRequest(request: RequestHeader, error: String) = {
     Future.successful(BadRequest("Bad Request: " + error))
-  }
+  }*/
 }

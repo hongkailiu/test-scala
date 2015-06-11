@@ -2,23 +2,23 @@ name := """test-play"""
 
 version := "1.0-SNAPSHOT"
 
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
-  //"org.webjars" %% "webjars-play" % "2.3-M1",
-  "org.webjars" %% "webjars-play" % "2.3.0",
-  "org.webjars" % "jquery" % "1.11.1",
-  //"org.webjars" % "bootstrap" % "2.3.1",
-  "org.webjars" % "bootstrap" % "3.3.4" exclude("org.webjars", "jquery"),
-  "org.webjars" % "requirejs" % "2.1.11-1",
+  jdbc,
+  cache,
+  ws,
+  specs2 % Test,
   "org.twitter4j" % "twitter4j-core" % "4.0.3",
   "com.github.nscala-time" %% "nscala-time" % "2.0.0",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test",
-  //"org.scalatest" %% "scalatest" % "2.2.4" % Test,
-  // not working with the following
-  //  "org.scalatestplus" %% "play" % "1.1.1" % "test",
-  //"org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
   "org.scalamock" %% "scalamock-specs2-support" % "3.2" % "test"
 )
 
-//lazy val root = (project in file(".")).addPlugins(PlayScala)
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+// Play provides two styles of routers, one expects its actions to be injected, the
+// other, legacy style, accesses its actions statically.
+//routesGenerator := InjectedRoutesGenerator

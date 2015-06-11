@@ -5,13 +5,15 @@ import akka.testkit.TestProbe
 import org.joda.time.DateTime
 import org.scalamock.specs2.IsolatedMockFactory
 import org.specs2.mutable.Specification
-import org.specs2.time.NoTimeConversions
-import twitter4j._
 import scala.concurrent.duration._
+
+import twitter4j._
+
+
 /**
  * Created by hongkailiu on 2015-06-06.
  */
-class MyHandlerTest extends Specification with NoTimeConversions with IsolatedMockFactory  {
+class MyHandlerTest extends Specification with IsolatedMockFactory  {
   sequential
 
   implicit val system = ActorSystem("MyHandlerTest")
@@ -34,7 +36,7 @@ class MyHandlerTest extends Specification with NoTimeConversions with IsolatedMo
       setupMockBehavior()
       unitUnderTest.handle(mockQueryResult)
       var results:Seq[String]=Seq()
-      testProbe.receiveWhile(1 second) {
+      testProbe.receiveWhile(new FiniteDuration(1, SECONDS)) {
         case s:String => {
           results = results :+ s
         }
@@ -42,7 +44,7 @@ class MyHandlerTest extends Specification with NoTimeConversions with IsolatedMo
       results.size should beEqualTo(3)
 
       unitUnderTest.handle(mockQueryResult1)
-      val dummy=testProbe.expectNoMsg(1 second)
+      val dummy=testProbe.expectNoMsg(new FiniteDuration(1, SECONDS))
       dummy should be equalTo(())
     }
   }
