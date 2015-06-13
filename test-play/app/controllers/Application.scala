@@ -5,7 +5,7 @@ import play.api.libs.iteratee.{Iteratee, Enumerator, Concurrent}
 import play.api.mvc._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-trait Application extends Controller {
+class Application extends Controller {
   this: Controller =>
   def index = Action {
     Ok(views.html.index("Hello Play Framework"))
@@ -26,5 +26,3 @@ trait Application extends Controller {
   }
   }
 }
-
-object Application extends Controller with Application

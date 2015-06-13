@@ -14,9 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-object Twitter extends Controller with Twitter
-
-trait Twitter extends Controller {
+class Twitter extends Controller {
 
   // http://localhost:9000/twitter/show/dwts
   def show(hashTag: String) = Action {

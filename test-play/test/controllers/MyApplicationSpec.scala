@@ -11,12 +11,12 @@ import scala.concurrent.Future
 //@RunWith(classOf[JUnitRunner])
 class MyApplicationSpec extends PlaySpecification {
 
-  class TestController() extends Controller with controllers.Application
+  //class TestController() extends Controller with controllers.Application
 
   "Application Page#index" should {
     "should be valid" in new WithApplication {
     //"should be valid" in {
-      val controller = new TestController()
+      val controller = new Application()
       val result: Future[Result] = controller.index().apply(FakeRequest())
       val bodyText: String = contentAsString(result)
       //val bodyText: String = "Hello"
