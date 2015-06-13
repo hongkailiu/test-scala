@@ -1,16 +1,19 @@
 package controllers
 
+import javax.inject.Inject
+
+import daos.PersonDAO
 import services.PersonService
 import models.Person
 import play.api.mvc.{BodyParsers, Action, Controller}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-class Persons extends Controller {
+class Persons @Inject() (personService: PersonService) extends Controller {
   //http://localhost:9000/persons/all
   def list = Action {
     //Ok(views.html.index("Hello Play Framework: list"))
-    val json = Json.toJson(PersonService.list)
+    val json = Json.toJson(personService.list)
     Ok(json)
   }
 
@@ -18,15 +21,16 @@ class Persons extends Controller {
     Ok(views.html.index("Hello Play Framework: show: " + id))
   }
 
-  def savePlace = Action(BodyParsers.parse.json) { request =>
-    val placeResult = request.body.validate[Person]
-    placeResult.fold(
+  def save = Action(BodyParsers.parse.json) { request =>
+    val personResult = request.body.validate[Person]
+    personResult.fold(
       errors => {
         BadRequest(Json.obj("status" ->"KO", "message" -> JsError.toJson(errors)))
       },
-      Person => {
+      person => {
         // TODO Person.save(place)
-        Ok(Json.obj("status" ->"OK", "message" -> ("Person '"+Person.name+"' saved.") ))
+        personService.save(person)
+        Ok(Json.obj("status" ->"OK", "message" -> ("Person '"+person.name+"' saved.") ))
       }
     )
   }

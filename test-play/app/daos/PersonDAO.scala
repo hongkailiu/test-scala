@@ -1,7 +1,7 @@
 package daos
 
+import com.google.inject.ImplementedBy
 import models.Person
-import org.slf4j.LoggerFactory
 import play.api.Logger
 
 /**
@@ -21,7 +21,7 @@ class PersonDAOImpl extends PersonDAO {
   }
 }
 
-
+@ImplementedBy(classOf[PersonDAOImpl])
 trait PersonDAO {
   def save(person:Person)
   def list():List[Person]

@@ -12,6 +12,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 # person
 GET     /persons/all                controllers.Persons.list()
 GET     /persons/:id                controllers.Persons.show(id: Long)
+POST     /persons/save               controllers.Persons.save()
 
 #ws
 GET     /hello                      controllers.Application.wsHello
