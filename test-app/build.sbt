@@ -4,7 +4,7 @@ name := """test-app"""
 
 organization := "tk.hongkailiu.test-scala"
 
-version := "1.0"
+version := "1.1-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
