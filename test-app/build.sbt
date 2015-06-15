@@ -25,7 +25,7 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 pomExtra := (
-  <url>http://jsuereth.com/scala-arm</url>
+  <url>https://github.com/hongkailiu/test-scala/tree/master/test-app</url>
     <licenses>
       <license>
         <name>MIT License</name>
