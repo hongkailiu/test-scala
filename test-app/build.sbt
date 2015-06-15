@@ -42,3 +42,16 @@ pomExtra := (
         <url>http://www.hongkailiu.tk</url>
       </developer>
     </developers>)
+
+
+// remove resources from the jar
+def filterOut(name: String): Boolean = {
+  ! (name.endsWith("logback.xml") ||
+    name.endsWith("application.conf"))
+}
+
+mappings in (Compile,packageBin) ~= {
+  (ms: Seq[(File,String)]) =>
+    ms filter { case (file, toPath) => filterOut(toPath) }
+}
+
