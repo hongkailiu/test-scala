@@ -20,3 +20,6 @@ GET     /hello                      controllers.Application.wsHello
 #twitter
 GET     /twitter/show/:hashTag      controllers.Twitter.show(hashTag: String)
 GET     /twitter/api/ht             controllers.Twitter.twitterWebSocket
+
+#calculator
+GET     /calc/add23/:arg             controllers.Calculator.add23(arg: Int)

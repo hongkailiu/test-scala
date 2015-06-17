@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   specs2 % Test,
   "org.twitter4j" % "twitter4j-core" % "4.0.3",
   "com.github.nscala-time" %% "nscala-time" % "2.0.0",
+  "tk.hongkailiu.test-scala" %% "test-app" % "1.1",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test",
   "org.scalamock" %% "scalamock-specs2-support" % "3.2" % "test" excludeAll(ExclusionRule(organization = "org.specs2"))
 )
