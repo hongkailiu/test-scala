@@ -59,7 +59,7 @@ mappings in (Compile,packageBin) ~= {
 }
 
 
-
+releaseSettings
 
 ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
