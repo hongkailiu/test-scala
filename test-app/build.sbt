@@ -1,4 +1,7 @@
 import Dependencies._
+import sbtrelease.ReleasePlugin.ReleaseKeys
+import sbtrelease.ReleaseStep
+import sbtrelease.ReleaseStateTransformations._
 
 name := """test-app"""
 
@@ -55,3 +58,20 @@ mappings in (Compile,packageBin) ~= {
     ms filter { case (file, toPath) => filterOut(toPath) }
 }
 
+
+
+
+ReleaseKeys.releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  ReleaseStep(action = Command.process("publishSigned", _)),
+  setNextVersion,
+  commitNextVersion,
+  ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+  pushChanges
+)
