@@ -1,6 +1,7 @@
 import Dependencies._
 import sbtrelease.ReleasePlugin.ReleaseKeys
 import sbtrelease.ReleaseStep
+import sbtrelease.ReleasePlugin.ReleaseKeys.releaseCommand
 import sbtrelease.ReleaseStateTransformations._
 
 name := """test-app"""
@@ -71,6 +72,6 @@ ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   ReleaseStep(action = Command.process("publishSigned", _)),
   setNextVersion,
   commitNextVersion,
-  ReleaseStep(action = Command.process("sonatypeRelease", _)),
+  releaseCommand("sonatypeRelease"),
   pushChanges
 )
