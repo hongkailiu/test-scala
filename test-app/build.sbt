@@ -5,11 +5,11 @@ import sbtrelease.ReleaseStateTransformations._
 
 name := """test-app"""
 
-organization := "tk.hongkailiu.test-scala"
+organization in ThisBuild := "tk.hongkailiu.test-scala"
 
-version := "1.1.1-SNAPSHOT"
+//version := "1.1.1-SNAPSHOT"
 
-scalaVersion := "2.11.6"
+scalaVersion in ThisBuild := "2.11.6"
 
 libraryDependencies ++= testAppDeps
 
