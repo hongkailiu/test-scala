@@ -58,8 +58,7 @@ mappings in (Compile,packageBin) ~= {
     ms filter { case (file, toPath) => filterOut(toPath) }
 }
 
-
-
+releaseSettings
 
 ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
